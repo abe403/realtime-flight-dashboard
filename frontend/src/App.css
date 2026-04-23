@@ -124,6 +124,12 @@ h1 {
   background: rgba(255, 255, 255, 0.05);
 }
 
+.vehicle-info-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .route-badge {
   background: var(--primary);
   color: white;
@@ -140,7 +146,6 @@ h1 {
   border-radius: 4px;
   font-size: 0.7rem;
   font-weight: bold;
-  margin-left: 8px;
 }
 
 .inactive-item {

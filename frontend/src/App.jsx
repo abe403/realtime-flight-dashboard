@@ -53,10 +53,14 @@ function App() {
                   const isActive = Date.now() - new Date(v.lastUpdate).getTime() < 30000;
                   return (
                   <li key={v.id} className={`vehicle-item ${!isActive ? 'inactive-item' : ''}`}>
-                    <span className="route-badge">{v.route}</span>
-                    <span className="vehicle-id">{v.vehicleId}</span>
-                    {!isActive && <span className="inactive-badge">INACTIVE</span>}
-                    <span className="update-time">{new Date(v.lastUpdate).toLocaleTimeString()}</span>
+                    <div className="vehicle-info-left">
+                      <span className="route-badge">{v.route}</span>
+                      <span className="vehicle-id">{v.vehicleId}</span>
+                      {!isActive && <span className="inactive-badge">INACTIVE</span>}
+                    </div>
+                    <div className="vehicle-info-right">
+                      <span className="update-time">{new Date(v.lastUpdate).toLocaleTimeString()}</span>
+                    </div>
                   </li>
                   );
                 })}
