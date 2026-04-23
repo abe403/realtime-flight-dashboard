@@ -165,8 +165,7 @@ h1 {
 
 .map-panel {
   padding: 1rem;
-  height: calc(100vh - 8rem);
-  min-height: 600px;
+  height: 100%;
   position: relative;
   z-index: 1;
 }
