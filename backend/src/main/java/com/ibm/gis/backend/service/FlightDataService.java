@@ -83,8 +83,8 @@ public class FlightDataService {
                     }
                 }
 
-                // Remove flights that have flown outside the bounding box or landed
-                LocalDateTime expirationTime = LocalDateTime.now().minusSeconds(30);
+                // Remove flights that have flown outside the bounding box or landed for more than 5 minutes
+                LocalDateTime expirationTime = LocalDateTime.now().minusMinutes(5);
                 List<TransitVehicle> staleFlights = existing.stream()
                         .filter(v -> v.getLastUpdate() != null && v.getLastUpdate().isBefore(expirationTime))
                         .collect(java.util.stream.Collectors.toList());

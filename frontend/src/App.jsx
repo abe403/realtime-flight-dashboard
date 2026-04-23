@@ -49,13 +49,17 @@ function App() {
               <p>Loading transit data...</p>
             ) : (
               <ul>
-                {vehicles.map(v => (
-                  <li key={v.id} className="vehicle-item">
+                {vehicles.map(v => {
+                  const isActive = Date.now() - new Date(v.lastUpdate).getTime() < 30000;
+                  return (
+                  <li key={v.id} className={`vehicle-item ${!isActive ? 'inactive-item' : ''}`}>
                     <span className="route-badge">{v.route}</span>
                     <span className="vehicle-id">{v.vehicleId}</span>
+                    {!isActive && <span className="inactive-badge">INACTIVE</span>}
                     <span className="update-time">{new Date(v.lastUpdate).toLocaleTimeString()}</span>
                   </li>
-                ))}
+                  );
+                })}
               </ul>
             )}
           </div>
