@@ -82,19 +82,24 @@ public class FlightDataService {
                         repository.save(vehicle);
                     }
                 }
-
-                // Remove flights that have flown outside the bounding box or landed for more than 5 minutes
-                LocalDateTime expirationTime = LocalDateTime.now().minusMinutes(5);
-                List<TransitVehicle> staleFlights = existing.stream()
-                        .filter(v -> v.getLastUpdate() != null && v.getLastUpdate().isBefore(expirationTime))
-                        .collect(java.util.stream.Collectors.toList());
-                
-                if (!staleFlights.isEmpty()) {
-                    repository.deleteAll(staleFlights);
-                }
             }
         } catch (Exception e) {
             System.err.println("Error fetching flight data: " + e.getMessage());
+        }
+
+        // ALways run cleanup routine even if API fails or throws exceptions
+        try {
+            LocalDateTime expirationTime = LocalDateTime.now().minusMinutes(5);
+            List<TransitVehicle> existing = repository.findAll();
+            List<TransitVehicle> staleFlights = existing.stream()
+                    .filter(v -> v.getLastUpdate() != null && v.getLastUpdate().isBefore(expirationTime))
+                    .collect(java.util.stream.Collectors.toList());
+            
+            if (!staleFlights.isEmpty()) {
+                repository.deleteAll(staleFlights);
+            }
+        } catch (Exception e) {
+            System.err.println("Error cleaning up stale flights: " + e.getMessage());
         }
     }
 }
