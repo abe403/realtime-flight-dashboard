@@ -192,3 +192,8 @@ h1 {
     height: 600px;
   }
 }
+
+/* Smooth Trajectory Interpolation */
+.leaflet-marker-icon, .leaflet-marker-shadow {
+  transition: transform 8s linear !important;
+}
