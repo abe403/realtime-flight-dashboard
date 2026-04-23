@@ -5,6 +5,7 @@ import './App.css';
 function App() {
   const [vehicles, setVehicles] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('map'); // State for mobile tabs
 
   useEffect(() => {
     const fetchVehicles = async () => {
@@ -28,22 +29,40 @@ function App() {
   return (
     <div className="app-container">
       <header className="app-header">
-        <div className="logo-container">
-          <div className="pulse-dot"></div>
-          <h1>Live Flight Tracker</h1>
+        <div className="header-title-group">
+          <div className="logo-container">
+            <div className="pulse-dot"></div>
+            <h1>Live Flight Tracker</h1>
+          </div>
+          <p className="subtitle">Real-time Flight Tracking in Guadalajara</p>
         </div>
-        <p className="subtitle">Real-time Flight Tracking in Guadalajara</p>
+        
+        {/* Mobile Tabs */}
+        <div className="mobile-tabs">
+          <button 
+            className={`tab-btn ${activeTab === 'list' ? 'active' : ''}`}
+            onClick={() => setActiveTab('list')}
+          >
+            List View
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'map' ? 'active' : ''}`}
+            onClick={() => setActiveTab('map')}
+          >
+            Map View
+          </button>
+        </div>
       </header>
 
       <main className="main-content">
-        <div className="dashboard-panel">
-          <div className="stats-card glass">
+        <div className={`dashboard-panel ${activeTab === 'list' ? 'active' : ''}`}>
+          <div className="stats-card">
             <h3>Active Vehicles</h3>
             <div className="stat-number">{vehicles.length}</div>
             <p className="stat-label">Currently tracked</p>
           </div>
           
-          <div className="vehicle-list glass">
+          <div className="vehicle-list">
             <h3>Recent Updates</h3>
             {loading ? (
               <p>Loading transit data...</p>
@@ -65,7 +84,7 @@ function App() {
           </div>
         </div>
 
-        <div className="map-panel glass">
+        <div className={`map-panel ${activeTab === 'map' ? 'active' : ''}`}>
           <MapComponent vehicles={vehicles} />
         </div>
       </main>
