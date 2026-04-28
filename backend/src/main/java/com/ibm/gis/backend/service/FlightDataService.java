@@ -23,11 +23,12 @@ import java.util.Optional;
 public class FlightDataService {
 
     private final TransitVehicleRepository repository;
+    private final RestTemplate restTemplate;
     private final GeometryFactory geometryFactory = new GeometryFactory();
-    private final RestTemplate restTemplate = new RestTemplate();
 
-    public FlightDataService(TransitVehicleRepository repository) {
+    public FlightDataService(TransitVehicleRepository repository, RestTemplate restTemplate) {
         this.repository = repository;
+        this.restTemplate = restTemplate;
     }
 
     @Scheduled(fixedRate = 10000)
